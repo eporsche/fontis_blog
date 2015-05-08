@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Fontis Blog Extension
  *
@@ -18,34 +19,33 @@
  * @copyright  Copyright (c) 2013 Fontis Pty. Ltd. (http://www.fontis.com.au)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-
 class Fontis_Blog_Block_Post extends Mage_Core_Block_Template
 {
-    const GRAVATAR_BASE_URL         = "http://www.gravatar.com/avatar/";
-    const GRAVATAR_SECURE_BASE_URL  = "https://secure.gravatar.com/avatar/";
+    const GRAVATAR_BASE_URL = "http://www.gravatar.com/avatar/";
+    const GRAVATAR_SECURE_BASE_URL = "https://secure.gravatar.com/avatar/";
 
     protected function _prepareLayout()
     {
         $blogHelper = Mage::helper("blog");
-        $post = $this->getPost();
-        $blogTitle = Mage::getStoreConfig("fontis_blog/blog/title");
+        $post       = $this->getPost();
+        $blogTitle  = Mage::getStoreConfig("fontis_blog/blog/title");
 
         // Show breadcrumbs
         if (Mage::getStoreConfig("fontis_blog/blog/blogcrumbs") && ($breadcrumbs = $this->getLayout()->getBlock("breadcrumbs"))) {
-            $breadcrumbs->addCrumb("home", array(
+            $breadcrumbs->addCrumb("home", [
                 "label" => $blogHelper->__("Home"),
                 "title" => $blogHelper->__("Go to Home Page"),
                 "link"  => Mage::getBaseUrl()
-            ));
-            $breadcrumbs->addCrumb("blog", array(
+            ]);
+            $breadcrumbs->addCrumb("blog", [
                 "label" => $blogTitle,
                 "title" => $blogHelper->__("Return to") . " $blogTitle",
                 "link"  => Mage::getUrl($blogHelper->getBlogRoute())
-            ));
-            $breadcrumbs->addCrumb("blog_page", array(
+            ]);
+            $breadcrumbs->addCrumb("blog_page", [
                 "label" => $post->getTitle(),
                 "title" => $post->getTitle()
-            ));
+            ]);
         }
 
         if ($head = $this->getLayout()->getBlock("head")) {
@@ -88,8 +88,8 @@ class Fontis_Blog_Block_Post extends Mage_Core_Block_Template
             $post->setCreatedTime($this->formatTime($post->getCreatedTime(), $dateFormat, true));
             $post->setUpdateTime($this->formatTime($post->getUpdateTime(), $dateFormat, true));
 
-            $cats = Mage::getModel("blog/cat")->getCollection()->addPostFilter($post->getPostId());
-            $catUrls = array();
+            $cats    = Mage::getModel("blog/cat")->getCollection()->addPostFilter($post->getPostId());
+            $catUrls = [];
             foreach ($cats as $cat) {
                 $catUrls[$cat->getTitle()] = $helper->getCatUrl($cat);
             }
@@ -117,7 +117,7 @@ class Fontis_Blog_Block_Post extends Mage_Core_Block_Template
         $collection = Mage::getModel("blog/comment")->getCollection()
             ->addPostFilter($post->getPostId())
             ->setOrder("created_time", "asc")
-            ->addApproveFilter(2) // I haven't yet decided the appropriate place for comment status constants
+            ->addApproveFilter(2)// I haven't yet decided the appropriate place for comment status constants
             ->load();
 
         return $collection;
@@ -128,18 +128,19 @@ class Fontis_Blog_Block_Post extends Mage_Core_Block_Template
      * in numerical order. Don't go mucking with them!
      *
      * @param array $comments
+     *
      * @return array
      */
     public function commentsThread($comments)
     {
-        $thread = array();
+        $thread = [];
         foreach ($comments as $key => $comment) {
             $comment->setCreatedTime($this->formatTime($comment->getCreatedTime(), Mage::getStoreConfig("fontis_blog/blog/dateformat"), true));
             if ($repliedTo = $comment->getInReplyTo()) {
-                $repliedToArray = &$this->array_search_recursive($repliedTo, $thread);
-                $repliedToArray["children"][$key] = array("currentComment" => $comment, "children" => array());
+                $repliedToArray                   = &$this->array_search_recursive($repliedTo, $thread);
+                $repliedToArray["children"][$key] = ["currentComment" => $comment, "children" => []];
             } else {
-                $thread[$key] = array("currentComment" => $comment, "children" => array());
+                $thread[$key] = ["currentComment" => $comment, "children" => []];
             }
         }
         return $thread;
@@ -173,7 +174,7 @@ class Fontis_Blog_Block_Post extends Mage_Core_Block_Template
 
     public function getCommentsEnabled()
     {
-        return Mage::getStoreConfig("fontis_blog/comments/enabled");
+        return Mage::helper('blog')->isCommentsEnabled();
     }
 
     public function getLoginRequired()
@@ -183,8 +184,8 @@ class Fontis_Blog_Block_Post extends Mage_Core_Block_Template
 
     public function setCommentDetails($name, $email, $comment)
     {
-        $this->_data["commentName"] = $name;
-        $this->_data["commentEmail"] = $email;
+        $this->_data["commentName"]    = $name;
+        $this->_data["commentEmail"]   = $email;
         $this->_data["commentComment"] = $comment;
         return $this;
     }
@@ -218,11 +219,7 @@ class Fontis_Blog_Block_Post extends Mage_Core_Block_Template
      */
     public function isGravatarEnabled()
     {
-        if (Mage::getStoreConfig("fontis_blog/comments/grav_enabled")) {
-            return true;
-        } else {
-            return false;
-        }
+        return Mage::getStoreConfigFlag("fontis_blog/comments/grav_enabled");
     }
 
     /**
@@ -243,6 +240,7 @@ class Fontis_Blog_Block_Post extends Mage_Core_Block_Template
 
     /**
      * @param string $emailAddress
+     *
      * @return null|string
      */
     public function getGravatarUrl($emailAddress)
@@ -260,7 +258,7 @@ class Fontis_Blog_Block_Post extends Mage_Core_Block_Template
 
         $url .= "s=" . $this->getGravatarSize();
 
-        if (Mage::getStoreConfig("fontis_blog/comments/grav_default")) {
+        if (Mage::getStoreConfigFlag("fontis_blog/comments/grav_default")) {
             $url .= "&d=mm";
         } else {
             $url .= "&d=blank";

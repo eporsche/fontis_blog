@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Fontis Blog Extension
  *
@@ -18,7 +19,6 @@
  * @copyright  Copyright (c) 2013 Fontis Pty. Ltd. (http://www.fontis.com.au)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-
 abstract class Fontis_Blog_Block_Abstract extends Mage_Core_Block_Template
 {
     protected $_blogHelper = null;
@@ -55,7 +55,7 @@ abstract class Fontis_Blog_Block_Abstract extends Mage_Core_Block_Template
         if (Mage::getStoreConfig("fontis_blog/blog/usesummary") && ($summaryContent = $post->getSummaryContent())) {
             $summaryContent .= ' ...&nbsp;&nbsp;<a href="' . $post->getAddress() . '">' . $this->__("Read More") . '</a>';
             $post->setPostContent($summaryContent);
-        } else if ($readMore = (int) Mage::getStoreConfig('fontis_blog/blog/readmore')) {
+        } else if ($readMore = (int)Mage::getStoreConfig('fontis_blog/blog/readmore')) {
             $content = $post->getPostContent();
             if (strlen($content) >= $readMore) {
                 $content = substr($content, 0, $readMore);
@@ -74,10 +74,10 @@ abstract class Fontis_Blog_Block_Abstract extends Mage_Core_Block_Template
         $post->setCommentCount(count($comments));
 
         // Get the categories this post is in
-        $cats = Mage::getModel("blog/cat")->getCollection()
+        $cats    = Mage::getModel("blog/cat")->getCollection()
             ->addPostFilter($post->getPostId());
-        $catUrls = array();
-        $helper = Mage::helper("blog");
+        $catUrls = [];
+        $helper  = Mage::helper("blog");
         foreach ($cats as $cat) {
             $catUrls[$cat->getTitle()] = $helper->getCatUrl($cat);
         }
@@ -86,7 +86,7 @@ abstract class Fontis_Blog_Block_Abstract extends Mage_Core_Block_Template
 
     public function getBookmarkHtml($post)
     {
-        if (Mage::getStoreConfig("fontis_blog/blog/bookmarkslist")) {
+        if (Mage::getStoreConfigFlag("fontis_blog/blog/bookmarkslist")) {
             $this->setTemplate("fontis/blog/bookmark.phtml");
             $this->setPost($post);
             return $this->toHtml();
@@ -96,7 +96,7 @@ abstract class Fontis_Blog_Block_Abstract extends Mage_Core_Block_Template
 
     public function getCommentsEnabled()
     {
-        return Mage::getStoreConfig("fontis_blog/comments/enabled");
+        return Mage::helper('blog')->isCommentsEnabled();
     }
 
     public function closeTags($html)
@@ -108,7 +108,7 @@ abstract class Fontis_Blog_Block_Abstract extends Mage_Core_Block_Template
         // Put all closed tags into an array
         preg_match_all("#</([a-z]+)>#iU", $html, $result);
         $closedTags = $result[1];
-        $lenOpened = count($openedTags);
+        $lenOpened  = count($openedTags);
 
         // All tags are closed
         if (count($closedTags) == $lenOpened) {

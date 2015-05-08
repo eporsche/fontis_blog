@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Fontis Blog Extension
  *
@@ -18,13 +19,12 @@
  * @copyright  Copyright (c) 2013 Fontis Pty. Ltd. (http://www.fontis.com.au)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-
 class Fontis_Blog_Helper_Comment extends Mage_Core_Helper_Abstract
 {
     public function renderPage(Mage_Core_Controller_Front_Action $action, $identifier = null, $data)
     {
         $page = Mage::getSingleton('blog/post');
-        if (!is_null($identifier) && $identifier!==$page->getId()) {
+        if (!is_null($identifier) && $identifier !== $page->getId()) {
             $page->setStoreId(Mage::app()->getStore()->getId());
             if (!$page->load($identifier)) {
                 return false;

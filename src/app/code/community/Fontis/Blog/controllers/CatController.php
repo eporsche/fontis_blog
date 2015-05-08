@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Fontis Blog Extension
  *
@@ -18,7 +19,6 @@
  * @copyright  Copyright (c) 2013 Fontis Pty. Ltd. (http://www.fontis.com.au)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-
 class Fontis_Blog_CatController extends Mage_Core_Controller_Front_Action
 {
     public function viewAction()
@@ -31,8 +31,8 @@ class Fontis_Blog_CatController extends Mage_Core_Controller_Front_Action
 
     public function noRouteAction($coreRoute = null)
     {
-        $this->getResponse()->setHeader('HTTP/1.1','404 Not Found');
-        $this->getResponse()->setHeader('Status','404 File not found');
+        $this->getResponse()->setHeader('HTTP/1.1', '404 Not Found');
+        $this->getResponse()->setHeader('Status', '404 File not found');
 
         $pageId = Mage::getStoreConfig('web/default/cms_no_route');
         if (!Mage::helper('cms/page')->renderPage($this, $pageId)) {

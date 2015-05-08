@@ -24,7 +24,7 @@ class Fontis_Blog_Block_Links extends Fontis_Blog_Block_Abstract
     public function addTopLink()
     {
         if ($parentBlock = $this->getParentBlock()) {
-            $title = Mage::getStoreConfig("fontis_blog/blog/title");
+            $title = Mage::getStoreConfig('fontis_blog/blog/title');
             $parentBlock->addLink($title, $this->getBlogHelper()->getBlogRoute(), $title, true, array(), 15, null, 'class="top-link-blog"');
         }
     }
@@ -32,16 +32,16 @@ class Fontis_Blog_Block_Links extends Fontis_Blog_Block_Abstract
     public function addFooterLink()
     {
         if ($parentBlock = $this->getParentBlock()) {
-            $title = Mage::getStoreConfig("fontis_blog/blog/title");
+            $title = Mage::getStoreConfig('fontis_blog/blog/title');
             $parentBlock->addLink($title, $this->getBlogHelper()->getBlogRoute(), $title, true);
         }
     }
 
     public function addRssFeed()
     {
-        if (Mage::getStoreConfig("fontis_blog/rss/enabled")) {
-            if ($head = $this->getLayout()->getBlock("head")) {
-                $head->addItem("rss", Mage::getUrl($this->getBlogHelper()->getBlogRoute()) . "rss");
+        if (Mage::helper('blog')->isRssEnabled()) {
+            if ($head = $this->getLayout()->getBlock('head')) {
+                $head->addItem('rss', Mage::getUrl($this->getBlogHelper()->getBlogRoute()) . 'rss');
             }
         }
     }

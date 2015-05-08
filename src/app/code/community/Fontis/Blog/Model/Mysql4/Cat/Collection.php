@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Fontis Blog Extension
  *
@@ -11,14 +12,13 @@
  *
  * Parts of this software are derived from code originally developed by
  * Robert Chambers <magento@robertchambers.co.uk>
- * and released as "Lazzymonk's Blog" 0.5.8 in 2009.
+ * and released as 'Lazzymonk's Blog' 0.5.8 in 2009.
  *
  * @category   Fontis
  * @package    Fontis_Blog
  * @copyright  Copyright (c) 2013 Fontis Pty. Ltd. (http://www.fontis.com.au)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-
 class Fontis_Blog_Model_Mysql4_Cat_Collection extends Mage_Core_Model_Mysql4_Collection_Abstract
 {
     public function _construct()
@@ -53,11 +53,11 @@ class Fontis_Blog_Model_Mysql4_Cat_Collection extends Mage_Core_Model_Mysql4_Col
     {
         if (!Mage::app()->isSingleStoreMode()) {
             $this->getSelect()->join(
-                array('cat_table' => $this->getTable('post_cat')),
+                ['cat_table' => $this->getTable('post_cat')],
                 'main_table.post_id = cat_table.post_id',
-                array()
+                []
             )
-            ->where('cat_table.cat_id = ?', $catId);
+                ->where('cat_table.cat_id = ?', $catId);
 
             return $this;
         }
@@ -68,15 +68,15 @@ class Fontis_Blog_Model_Mysql4_Cat_Collection extends Mage_Core_Model_Mysql4_Col
     {
         if (!Mage::app()->isSingleStoreMode()) {
             if ($store instanceof Mage_Core_Model_Store) {
-                $store = array($store->getId());
+                $store = [$store->getId()];
             }
 
             $this->getSelect()->join(
-                array('store_table' => $this->getTable('cat_store')),
+                ['store_table' => $this->getTable('cat_store')],
                 'main_table.cat_id = store_table.cat_id',
-                array()
+                []
             )
-            ->where('store_table.store_id in (?)', array(0, $store));
+                ->where('store_table.store_id in (?)', [0, $store]);
 
             return $this;
         }
@@ -86,11 +86,11 @@ class Fontis_Blog_Model_Mysql4_Cat_Collection extends Mage_Core_Model_Mysql4_Col
     public function addPostFilter($postId)
     {
         $this->getSelect()->join(
-            array('cat_table' => $this->getTable('post_cat')),
+            ['cat_table' => $this->getTable('post_cat')],
             'main_table.cat_id = cat_table.cat_id',
-            array()
+            []
         )
-        ->where('cat_table.post_id = ?', $postId);
+            ->where('cat_table.post_id = ?', $postId);
 
         return $this;
     }

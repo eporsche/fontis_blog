@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Fontis Blog Extension
  *
@@ -18,21 +19,20 @@
  * @copyright  Copyright (c) 2013 Fontis Pty. Ltd. (http://www.fontis.com.au)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-
 class Fontis_Blog_Helper_Data extends Mage_Core_Helper_Abstract
 {
-    const XML_PATH_ENABLED          = "fontis_blog/blog/enabled";
-    const XML_PATH_TITLE            = "fontis_blog/blog/title";
-    const XML_PATH_MENU_LEFT        = "fontis_blog/blog/menuLeft";
-    const XML_PATH_MENU_RIGHT       = "fontis_blog/blog/menuRoght";
-    const XML_PATH_FOOTER_ENABLED   = "fontis_blog/blog/footerEnabled";
-    const XML_PATH_LAYOUT           = "fontis_blog/blog/layout";
-    const BLOG_COMMENTS_ENABLED     = "fontis_blog/comments/enabled";
-    const BLOG_COMMENTS_LOGIN       = "fontis_blog/comments/login";
-    const BLOG_TITLE                = "fontis_blog/blog/title";
-    const BLOG_ARCHIVES_ENABLED     = "fontis_blog/archives/enabled";
+    const XML_PATH_ENABLED = 'fontis_blog/blog/enabled';
+    const XML_PATH_TITLE = 'fontis_blog/blog/title';
+    const XML_PATH_MENU_LEFT = 'fontis_blog/blog/menuLeft';
+    const XML_PATH_MENU_RIGHT = 'fontis_blog/blog/menuRoght';
+    const XML_PATH_FOOTER_ENABLED = 'fontis_blog/blog/footerEnabled';
+    const XML_PATH_LAYOUT = 'fontis_blog/blog/layout';
+    const BLOG_COMMENTS_ENABLED = 'fontis_blog/comments/enabled';
+    const BLOG_COMMENTS_LOGIN = 'fontis_blog/comments/login';
+    const BLOG_TITLE = 'fontis_blog/blog/title';
+    const BLOG_ARCHIVES_ENABLED = 'fontis_blog/archives/enabled';
 
-    const GLOBAL_CACHE_TAG          = "fontis_blog";
+    const GLOBAL_CACHE_TAG = 'fontis_blog';
 
     protected $_route = null;
     protected $_bmImagesRoute = null;
@@ -70,12 +70,17 @@ class Fontis_Blog_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function isCommentsEnabled()
     {
-        return Mage::getStoreConfig(self::BLOG_COMMENTS_ENABLED);
+        return Mage::getStoreConfigFlag(self::BLOG_COMMENTS_ENABLED);
     }
 
     public function isLoginRequired()
     {
         return Mage::getStoreConfig(self::BLOG_COMMENTS_LOGIN);
+    }
+
+    public function isRssEnabled()
+    {
+        return Mage::getStoreConfigFlag('fontis_blog/rss/enabled');
     }
 
     /**
@@ -93,13 +98,13 @@ class Fontis_Blog_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function getUserName()
     {
-        $customer = Mage::getSingleton("customer/session")->getCustomer();
-        return trim($customer->getFirstname() . " " . $customer->getLastname());
+        $customer = Mage::getSingleton('customer/session')->getCustomer();
+        return trim($customer->getFirstname() . ' ' . $customer->getLastname());
     }
 
     public function getUserEmail()
     {
-        $customer = Mage::getSingleton("customer/session")->getCustomer();
+        $customer = Mage::getSingleton('customer/session')->getCustomer();
         return $customer->getEmail();
     }
 
@@ -116,7 +121,7 @@ class Fontis_Blog_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getCatUrl($cat)
     {
-        return Mage::getUrl($this->getBlogRoute()) . "cat/" . $cat->getIdentifier();
+        return Mage::getUrl($this->getBlogRoute()) . 'cat/' . $cat->getIdentifier();
     }
 
     /**
@@ -125,9 +130,9 @@ class Fontis_Blog_Helper_Data extends Mage_Core_Helper_Abstract
     public function getBlogRoute()
     {
         if ($this->_route === null) {
-            $this->_route = Mage::getStoreConfig("fontis_blog/blog/route");
+            $this->_route = Mage::getStoreConfig('fontis_blog/blog/route');
             if (!$this->_route) {
-                $this->_route =  "blog";
+                $this->_route = 'blog';
             }
         }
         return $this->_route;
@@ -136,16 +141,16 @@ class Fontis_Blog_Helper_Data extends Mage_Core_Helper_Abstract
     public function getBookmarkImagesRoute()
     {
         if ($this->_bmImagesRoute === null) {
-            $this->_bmImagesRoute = Mage::getDesign()->getSkinUrl("fontis/blog/images/communityIcons");
+            $this->_bmImagesRoute = Mage::getDesign()->getSkinUrl('fontis/blog/images/communityIcons');
         }
         return $this->_bmImagesRoute;
     }
 
     public function useRecaptcha()
     {
-        if (Mage::getStoreConfig("fontis_blog/comments/recaptcha")) {
-            if (Mage::helper("core")->isModuleOutputEnabled("Fontis_Recaptcha") && Mage::helper("fontis_recaptcha")->isEnabled()) {
-                if (!(Mage::getStoreConfig("fontis_recaptcha/recaptcha/when_loggedin") && (Mage::getSingleton('customer/session')->isLoggedIn()))) {
+        if (Mage::getStoreConfig('fontis_blog/comments/recaptcha')) {
+            if (Mage::helper('core')->isModuleOutputEnabled('Fontis_Recaptcha') && Mage::helper('fontis_recaptcha')->isEnabled()) {
+                if (!(Mage::getStoreConfig('fontis_recaptcha/recaptcha/when_loggedin') && (Mage::getSingleton('customer/session')->isLoggedIn()))) {
                     return true;
                 }
             }
@@ -159,7 +164,7 @@ class Fontis_Blog_Helper_Data extends Mage_Core_Helper_Abstract
     public function getFpcProcessor()
     {
         if ($this->_fpcProcessor === false) {
-            $fpcProcessor = Mage::getConfig()->getNode("global/cache/fpc_processor");
+            $fpcProcessor = Mage::getConfig()->getNode('global/cache/fpc_processor');
             if ($fpcProcessor) {
                 $this->_fpcProcessor = Mage::getSingleton($fpcProcessor);
             } else {
@@ -177,12 +182,12 @@ class Fontis_Blog_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * @param array|string $tag
+     * @param array|string $tags
      */
     public function clearFpcTags($tags)
     {
         if (!is_array($tags)) {
-            $tags = array($tags);
+            $tags = [$tags];
         }
         Mage::app()->cleanCache($tags);
     }
@@ -195,13 +200,17 @@ class Fontis_Blog_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function enablePost(Fontis_Blog_Model_Post $post)
     {
-        $tags = array(
+        $tags = [
             Fontis_Blog_Block_Blog::CACHE_TAG,
-            Fontis_Blog_Block_Rss::CACHE_TAG,
             Fontis_Blog_Block_Archive::CACHE_TAG,
-        );
+        ];
+
+        if ($this->isRssEnabled()) {
+            $tags[] = Fontis_Blog_Block_Rss::CACHE_TAG;
+        }
+
         foreach ($post->getCats() as $cat) {
-            $tags[] = Fontis_Blog_Block_Cat::CACHE_TAG . "_" . $cat;
+            $tags[] = Fontis_Blog_Block_Cat::CACHE_TAG . '_' . $cat;
         }
         $this->clearFpcTags($tags);
     }

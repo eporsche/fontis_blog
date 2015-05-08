@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Fontis Blog Extension
  *
@@ -18,7 +19,6 @@
  * @copyright  Copyright (c) 2013 Fontis Pty. Ltd. (http://www.fontis.com.au)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-
 class Fontis_Blog_Block_Menu extends Fontis_Blog_Block_Abstract
 {
     const CACHE_TAG = "fontis_blog_menu";
@@ -27,7 +27,7 @@ class Fontis_Blog_Block_Menu extends Fontis_Blog_Block_Abstract
 
     protected function _prepareLayout()
     {
-        $this->getBlogHelper()->addTagToFpc(array(self::CACHE_TAG, Fontis_Blog_Helper_Data::GLOBAL_CACHE_TAG));
+        $this->getBlogHelper()->addTagToFpc([self::CACHE_TAG, Fontis_Blog_Helper_Data::GLOBAL_CACHE_TAG]);
         return parent::_prepareLayout();
     }
 
@@ -49,21 +49,21 @@ class Fontis_Blog_Block_Menu extends Fontis_Blog_Block_Abstract
 
             $archiveType = Mage::getStoreConfig("fontis_blog/archives/type");
             if ($archiveType == Fontis_Blog_Model_System_Archivetype::YEARLY) {
-                $columns = array(new Zend_Db_Expr("year(created_time) as year"));
-                $group = "year(created_time)";
+                $columns = [new Zend_Db_Expr("year(created_time) as year")];
+                $group   = "year(created_time)";
             } elseif ($archiveType == Fontis_Blog_Model_System_Archivetype::MONTHLY) {
-                $columns = array(
+                $columns = [
                     new Zend_Db_Expr("year(created_time) as year"),
                     new Zend_Db_Expr("month(created_time) as month")
-                );
-                $group = "year(created_time), month(created_time)";
+                ];
+                $group   = "year(created_time), month(created_time)";
             } elseif ($archiveType == Fontis_Blog_Model_System_Archivetype::DAILY) {
-                $columns = array(
+                $columns = [
                     new Zend_Db_Expr("year(created_time) as year"),
                     new Zend_Db_Expr("month(created_time) as month"),
                     new Zend_Db_Expr("day(created_time) as day"),
-                );
-                $group = "year(created_time), month(created_time), day(created_time)";
+                ];
+                $group   = "year(created_time), month(created_time), day(created_time)";
             }
             if ($this->showPostCount()) {
                 $columns[] = new Zend_Db_Expr("count(main_table.post_id) as postcount");
@@ -77,7 +77,7 @@ class Fontis_Blog_Block_Menu extends Fontis_Blog_Block_Abstract
             }
 
             $dateString = Fontis_Blog_Model_System_Archivetype::getTypeFormat($archiveType);
-            $route = $this->getBlogHelper()->getBlogRoute();
+            $route      = $this->getBlogHelper()->getBlogRoute();
             foreach ($collection as $item) {
                 $archiveRoute = "archive/" . $item->getYear();
                 if ($item->getMonth()) {
@@ -142,6 +142,7 @@ class Fontis_Blog_Block_Menu extends Fontis_Blog_Block_Abstract
 
     /**
      * @param Fontis_Blog_Model_Cat $cat
+     *
      * @return bool
      */
     public function isCatActive($cat)

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Fontis Blog Extension
  *
@@ -11,14 +12,13 @@
  *
  * Parts of this software are derived from code originally developed by
  * Robert Chambers <magento@robertchambers.co.uk>
- * and released as "Lazzymonk's Blog" 0.5.8 in 2009.
+ * and released as 'Lazzymonk's Blog' 0.5.8 in 2009.
  *
  * @category   Fontis
  * @package    Fontis_Blog
  * @copyright  Copyright (c) 2013 Fontis Pty. Ltd. (http://www.fontis.com.au)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-
 class Fontis_Blog_Model_Mysql4_Post extends Mage_Core_Model_Mysql4_Abstract
 {
     protected function _construct()
@@ -28,7 +28,7 @@ class Fontis_Blog_Model_Mysql4_Post extends Mage_Core_Model_Mysql4_Abstract
 
     public function load(Mage_Core_Model_Abstract $object, $value, $field = null)
     {
-        if (strcmp($value, (int) $value) !== 0) {
+        if (strcmp($value, (int)$value) !== 0) {
             $field = 'identifier';
         }
         return parent::load($object, $value, $field);
@@ -50,8 +50,8 @@ class Fontis_Blog_Model_Mysql4_Post extends Mage_Core_Model_Mysql4_Abstract
     public function getIsUniqueIdentifier(Mage_Core_Model_Abstract $object)
     {
         $select = $this->_getWriteAdapter()->select()
-                ->from($this->getMainTable())
-                ->where($this->getMainTable() . '.identifier = ?', $object->getData('identifier'));
+            ->from($this->getMainTable())
+            ->where($this->getMainTable() . '.identifier = ?', $object->getData('identifier'));
         if ($object->getId()) {
             $select->where($this->getMainTable() . '.post_id <> ?', $object->getId());
         }
@@ -71,31 +71,31 @@ class Fontis_Blog_Model_Mysql4_Post extends Mage_Core_Model_Mysql4_Abstract
     protected function _afterSave(Mage_Core_Model_Abstract $object)
     {
         $writeAdapter = $this->_getWriteAdapter();
-        $condition = $writeAdapter->quoteInto("post_id = ?", $object->getId());
-        $writeAdapter->delete($this->getTable("store"), $condition);
+        $condition    = $writeAdapter->quoteInto('post_id = ?', $object->getId());
+        $writeAdapter->delete($this->getTable('store'), $condition);
 
-        if ($object->getData("stores")) {
-            foreach ((array) $object->getData("stores") as $store) {
-                $storeArray = array();
-                $storeArray["post_id"] = $object->getId();
-                $storeArray["store_id"] = $store;
-                $writeAdapter->insert($this->getTable("store"), $storeArray);
+        if ($object->getData('stores')) {
+            foreach ((array)$object->getData('stores') as $store) {
+                $storeArray             = [];
+                $storeArray['post_id']  = $object->getId();
+                $storeArray['store_id'] = $store;
+                $writeAdapter->insert($this->getTable('store'), $storeArray);
             }
         } else {
-            $storeArray = array();
-            $storeArray["post_id"] = $object->getId();
-            $storeArray["store_id"] = Mage::app()->getStore(true)->getId();
-            $writeAdapter->insert($this->getTable("store"), $storeArray);
+            $storeArray             = [];
+            $storeArray['post_id']  = $object->getId();
+            $storeArray['store_id'] = Mage::app()->getStore(true)->getId();
+            $writeAdapter->insert($this->getTable('store'), $storeArray);
         }
 
-        $condition = $writeAdapter->quoteInto("post_id = ?", $object->getId());
-        $writeAdapter->delete($this->getTable("post_cat"), $condition);
+        $condition = $writeAdapter->quoteInto('post_id = ?', $object->getId());
+        $writeAdapter->delete($this->getTable('post_cat'), $condition);
 
-        foreach ((array) $object->getData("cats") as $catId) {
-            $storeArray = array();
-            $storeArray["post_id"] = $object->getId();
-            $storeArray["cat_id"] = $catId;
-            $writeAdapter->insert($this->getTable("post_cat"), $storeArray);
+        foreach ((array)$object->getData('cats') as $catId) {
+            $storeArray            = [];
+            $storeArray['post_id'] = $object->getId();
+            $storeArray['cat_id']  = $catId;
+            $writeAdapter->insert($this->getTable('post_cat'), $storeArray);
         }
 
         return parent::_afterSave($object);
@@ -108,28 +108,28 @@ class Fontis_Blog_Model_Mysql4_Post extends Mage_Core_Model_Mysql4_Abstract
     protected function _afterLoad(Mage_Core_Model_Abstract $object)
     {
         $readAdapter = $this->_getReadAdapter();
-        $select = $readAdapter->select()
-            ->from($this->getTable("store"))
-            ->where("post_id = ?", $object->getId());
+        $select      = $readAdapter->select()
+            ->from($this->getTable('store'))
+            ->where('post_id = ?', $object->getId());
 
         if ($data = $readAdapter->fetchAll($select)) {
-            $storesArray = array();
+            $storesArray = [];
             foreach ($data as $row) {
-                $storesArray[] = $row["store_id"];
+                $storesArray[] = $row['store_id'];
             }
-            $object->setData("store_id", $storesArray);
+            $object->setData('store_id', $storesArray);
         }
 
         $select = $readAdapter->select()
-            ->from($this->getTable("post_cat"))
-            ->where("post_id = ?", $object->getId());
+            ->from($this->getTable('post_cat'))
+            ->where('post_id = ?', $object->getId());
 
         if ($data = $readAdapter->fetchAll($select)) {
-            $catsArray = array();
+            $catsArray = [];
             foreach ($data as $row) {
-                $catsArray[] = $row["cat_id"];
+                $catsArray[] = $row['cat_id'];
             }
-            $object->setData("cats", $catsArray);
+            $object->setData('cats', $catsArray);
         }
 
         return parent::_afterLoad($object);
@@ -139,7 +139,8 @@ class Fontis_Blog_Model_Mysql4_Post extends Mage_Core_Model_Mysql4_Abstract
      * Retrieve select object for load object data
      *
      * @param string $field
-     * @param mixed $value
+     * @param mixed  $value
+     *
      * @return Zend_Db_Select
      */
     protected function _getLoadSelect($field, $value, $object)
@@ -147,9 +148,9 @@ class Fontis_Blog_Model_Mysql4_Post extends Mage_Core_Model_Mysql4_Abstract
         $select = parent::_getLoadSelect($field, $value, $object);
 
         if ($object->getStoreId()) {
-            $select->join(array("cps" => $this->getTable("store")), $this->getMainTable() . ".post_id = `cps`.post_id")
-                ->where("`cps`.store_id in (0, ?) ", $object->getStoreId())
-                ->order("store_id DESC")
+            $select->join(['cps' => $this->getTable('store')], $this->getMainTable() . '.post_id = `cps`.post_id')
+                ->where('`cps`.store_id in (0, ?) ', $object->getStoreId())
+                ->order('store_id DESC')
                 ->limit(1);
         }
         return $select;

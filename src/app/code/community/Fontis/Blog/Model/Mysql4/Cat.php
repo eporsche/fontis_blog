@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Fontis Blog Extension
  *
@@ -11,24 +12,23 @@
  *
  * Parts of this software are derived from code originally developed by
  * Robert Chambers <magento@robertchambers.co.uk>
- * and released as "Lazzymonk's Blog" 0.5.8 in 2009.
+ * and released as 'Lazzymonk's Blog' 0.5.8 in 2009.
  *
  * @category   Fontis
  * @package    Fontis_Blog
  * @copyright  Copyright (c) 2013 Fontis Pty. Ltd. (http://www.fontis.com.au)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-
 class Fontis_Blog_Model_Mysql4_Cat extends Mage_Core_Model_Mysql4_Abstract
 {
     public function _construct()
-    {    
+    {
         $this->_init('blog/cat', 'cat_id');
     }
 
-    public function load(Mage_Core_Model_Abstract $object, $value, $field=null)
+    public function load(Mage_Core_Model_Abstract $object, $value, $field = null)
     {
-        if (strcmp($value, (int) $value) !== 0) {
+        if (strcmp($value, (int)$value) !== 0) {
             $field = 'identifier';
         }
         return parent::load($object, $value, $field);
@@ -51,9 +51,9 @@ class Fontis_Blog_Model_Mysql4_Cat extends Mage_Core_Model_Mysql4_Abstract
     {
         $select = $this->_getWriteAdapter()->select()
             ->from($this->getMainTable())
-            ->where($this->getMainTable().'.identifier = ?', $object->getData('identifier'));
+            ->where($this->getMainTable() . '.identifier = ?', $object->getData('identifier'));
         if ($object->getId()) {
-            $select->where($this->getMainTable().'.cat_id <> ?',$object->getId());
+            $select->where($this->getMainTable() . '.cat_id <> ?', $object->getId());
         }
 
         if ($this->_getWriteAdapter()->fetchRow($select)) {
@@ -63,7 +63,7 @@ class Fontis_Blog_Model_Mysql4_Cat extends Mage_Core_Model_Mysql4_Abstract
         return true;
     }
 
-    protected function isNumericIdentifier (Mage_Core_Model_Abstract $object)
+    protected function isNumericIdentifier(Mage_Core_Model_Abstract $object)
     {
         return preg_match('/^[0-9]+$/', $object->getData('identifier'));
     }
@@ -74,15 +74,15 @@ class Fontis_Blog_Model_Mysql4_Cat extends Mage_Core_Model_Mysql4_Abstract
         $this->_getWriteAdapter()->delete($this->getTable('cat_store'), $condition);
 
         if ($object->getData('stores')) {
-            foreach ((array) $object->getData('stores') as $store) {
-                $storeArray = array();
-                $storeArray['cat_id'] = $object->getId();
+            foreach ((array)$object->getData('stores') as $store) {
+                $storeArray             = [];
+                $storeArray['cat_id']   = $object->getId();
                 $storeArray['store_id'] = $store;
                 $this->_getWriteAdapter()->insert($this->getTable('cat_store'), $storeArray);
             }
         } else {
-            $storeArray = array();
-            $storeArray['cat_id'] = $object->getId();
+            $storeArray             = [];
+            $storeArray['cat_id']   = $object->getId();
             $storeArray['store_id'] = Mage::app()->getStore(true)->getId();
             $this->_getWriteAdapter()->insert($this->getTable('cat_store'), $storeArray);
         }
@@ -96,7 +96,7 @@ class Fontis_Blog_Model_Mysql4_Cat extends Mage_Core_Model_Mysql4_Abstract
             ->where('cat_id = ?', $object->getId());
 
         if ($data = $this->_getReadAdapter()->fetchAll($select)) {
-            $storesArray = array();
+            $storesArray = [];
             foreach ($data as $row) {
                 $storesArray[] = $row['store_id'];
             }
@@ -111,7 +111,7 @@ class Fontis_Blog_Model_Mysql4_Cat extends Mage_Core_Model_Mysql4_Abstract
         $select = parent::_getLoadSelect($field, $value, $object);
 
         if ($object->getStoreId()) {
-            $select->join(array('cps' => $this->getTable('cat_store')), $this->getMainTable() . '.cat_id = `cps`.cat_id')
+            $select->join(['cps' => $this->getTable('cat_store')], $this->getMainTable() . '.cat_id = `cps`.cat_id')
                 ->where('`cps`.store_id in (0, ?) ', $object->getStoreId())
                 ->order('store_id DESC')
                 ->limit(1);

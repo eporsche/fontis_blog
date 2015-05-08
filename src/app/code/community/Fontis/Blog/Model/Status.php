@@ -11,7 +11,7 @@
  *
  * Parts of this software are derived from code originally developed by
  * Robert Chambers <magento@robertchambers.co.uk>
- * and released as "Lazzymonk's Blog" 0.5.8 in 2009.
+ * and released as 'Lazzymonk's Blog' 0.5.8 in 2009.
  *
  * @category   Fontis
  * @package    Fontis_Blog
@@ -27,7 +27,7 @@ class Fontis_Blog_Model_Status extends Varien_Object
 
     public function addEnabledFilterToCollection($collection)
     {
-        $collection->addEnableFilter(array("in" => $this->getEnabledStatusIds()));
+        $collection->addEnableFilter(array('in' => $this->getEnabledStatusIds()));
         return $this;
     }
 
@@ -54,11 +54,11 @@ class Fontis_Blog_Model_Status extends Varien_Object
 
     static public function getOptionArray()
     {
-        $blogHelper = Mage::helper("blog");
+        $blogHelper = Mage::helper('blog');
         return array(
-            self::STATUS_ENABLED    => $blogHelper->__("Enabled"),
-            self::STATUS_DISABLED   => $blogHelper->__("Disabled"),
-            self::STATUS_HIDDEN     => $blogHelper->__("Hidden")
+            self::STATUS_ENABLED    => $blogHelper->__('Enabled'),
+            self::STATUS_DISABLED   => $blogHelper->__('Disabled'),
+            self::STATUS_HIDDEN     => $blogHelper->__('Hidden')
         );
     }
 }

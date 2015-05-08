@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Fontis Blog Extension
  *
@@ -11,27 +12,25 @@
  *
  * Parts of this software are derived from code originally developed by
  * Robert Chambers <magento@robertchambers.co.uk>
- * and released as "Lazzymonk's Blog" 0.5.8 in 2009.
+ * and released as 'Lazzymonk's Blog' 0.5.8 in 2009.
  *
  * @category   Fontis
  * @package    Fontis_Blog
  * @copyright  Copyright (c) 2013 Fontis Pty. Ltd. (http://www.fontis.com.au)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-
 class Fontis_Blog_Model_System_Layouts
 {
     protected $_options;
-    
+
     public function toOptionArray()
     {
         if (!$this->_options) {
-            $layouts = array();
-            foreach (Mage::getConfig()->getNode("global/page/layouts")->children() as $layoutConfig) {
-                $this->_options[] = array(
-                   "value" => (string) $layoutConfig->template,
-                   "label" => (string) $layoutConfig->label
-                );
+            foreach (Mage::getConfig()->getNode('global/page/layouts')->children() as $layoutConfig) {
+                $this->_options[] = [
+                    'value' => (string)$layoutConfig->template,
+                    'label' => (string)$layoutConfig->label
+                ];
             }
         }
         return $this->_options;

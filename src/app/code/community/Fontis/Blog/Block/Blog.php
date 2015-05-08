@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Fontis Blog Extension
  *
@@ -18,14 +19,13 @@
  * @copyright  Copyright (c) 2013 Fontis Pty. Ltd. (http://www.fontis.com.au)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-
 class Fontis_Blog_Block_Blog extends Fontis_Blog_Block_Abstract
 {
     const CACHE_TAG = "fontis_blog_index";
 
     protected function _prepareLayout()
     {
-        $this->getBlogHelper()->addTagToFpc(array(self::CACHE_TAG, Fontis_Blog_Helper_Data::GLOBAL_CACHE_TAG));
+        $this->getBlogHelper()->addTagToFpc([self::CACHE_TAG, Fontis_Blog_Helper_Data::GLOBAL_CACHE_TAG]);
         return parent::_prepareLayout();
     }
 
@@ -37,7 +37,7 @@ class Fontis_Blog_Block_Blog extends Fontis_Blog_Block_Abstract
         Mage::getSingleton("blog/status")->addEnabledFilterToCollection($collection);
 
         $page = $this->getRequest()->getParam("page");
-        $collection->setPageSize((int) Mage::getStoreConfig("fontis_blog/blog/perpage"));
+        $collection->setPageSize((int)Mage::getStoreConfig("fontis_blog/blog/perpage"));
         $collection->setCurPage($page);
 
         foreach ($collection as $item) {
@@ -48,7 +48,7 @@ class Fontis_Blog_Block_Blog extends Fontis_Blog_Block_Abstract
 
     public function getPages()
     {
-        if ($perPage = (int) Mage::getStoreConfig("fontis_blog/blog/perpage")) {
+        if ($perPage = (int)Mage::getStoreConfig("fontis_blog/blog/perpage")) {
             $collection = Mage::getModel("blog/post")->getCollection()
                 ->addStoreFilter(Mage::app()->getStore()->getId())
                 ->setOrder("created_time ", "desc");
@@ -56,10 +56,10 @@ class Fontis_Blog_Block_Blog extends Fontis_Blog_Block_Abstract
 
             $collection->getSelect()
                 ->reset(Zend_Db_Select::COLUMNS)
-                ->columns(array(new Zend_Db_Expr("count(main_table.post_id) as postcount")));
+                ->columns([new Zend_Db_Expr("count(main_table.post_id) as postcount")]);
             $collection->load();
 
-            $currentPage = (int) $this->getRequest()->getParam("page");
+            $currentPage = (int)$this->getRequest()->getParam("page");
 
             if (!$currentPage) {
                 $currentPage = 1;

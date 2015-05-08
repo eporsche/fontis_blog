@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Fontis Blog Extension
  *
@@ -11,35 +12,34 @@
  *
  * Parts of this software are derived from code originally developed by
  * Robert Chambers <magento@robertchambers.co.uk>
- * and released as "Lazzymonk's Blog" 0.5.8 in 2009.
+ * and released as 'Lazzymonk's Blog' 0.5.8 in 2009.
  *
  * @category   Fontis
  * @package    Fontis_Blog
  * @copyright  Copyright (c) 2013 Fontis Pty. Ltd. (http://www.fontis.com.au)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-
 class Fontis_Blog_Model_Mysql4_Blog_Collection extends Mage_Core_Model_Mysql4_Collection_Abstract
 {
     public function _construct()
     {
-        $this->_init("blog/blog");
+        $this->_init('blog/blog');
     }
 
     public function addEnableFilter($status)
     {
-        $this->getSelect()->where("status = ?", $status);
+        $this->getSelect()->where('status = ?', $status);
         return $this;
     }
 
     public function addCatFilter($catId)
     {
         $this->getSelect()->join(
-            array("cat_table" => $this->getTable("post_cat")),
-            "main_table.post_id = cat_table.post_id",
-            array()
+            ['cat_table' => $this->getTable('post_cat')],
+            'main_table.post_id = cat_table.post_id',
+            []
         )
-        ->where("cat_table.cat_id = ?", $catId);
+            ->where('cat_table.cat_id = ?', $catId);
 
         return $this;
     }
@@ -67,7 +67,7 @@ class Fontis_Blog_Model_Mysql4_Blog_Collection extends Mage_Core_Model_Mysql4_Co
         }*/
 
         if (count($this) > 0) {
-            Mage::dispatchEvent("fontis_blog_blog_collection_load_after", array("collection" => $this));
+            Mage::dispatchEvent('fontis_blog_blog_collection_load_after', ['collection' => $this]);
         }
 
         return parent::_afterLoad();
@@ -77,21 +77,22 @@ class Fontis_Blog_Model_Mysql4_Blog_Collection extends Mage_Core_Model_Mysql4_Co
      * Add Filter by store
      *
      * @param int|Mage_Core_Model_Store $store
+     *
      * @return Mage_Cms_Model_Mysql4_Page_Collection
      */
     public function addStoreFilter($store)
     {
         if (!Mage::app()->isSingleStoreMode()) {
             if ($store instanceof Mage_Core_Model_Store) {
-                $store = array($store->getId());
+                $store = [$store->getId()];
             }
 
             $this->getSelect()->join(
-                array("store_table" => $this->getTable("store")),
-                "main_table.post_id = store_table.post_id",
-                array()
+                ['store_table' => $this->getTable('store')],
+                'main_table.post_id = store_table.post_id',
+                []
             )
-            ->where("store_table.store_id in (?)", array(0, $store));
+                ->where('store_table.store_id in (?)', [0, $store]);
 
             return $this;
         }
