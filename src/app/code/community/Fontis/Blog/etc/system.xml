@@ -1,5 +1,4 @@
-<?xml version="1.0"?>
-<!--
+<?xml version="1.0"?><!--
 /**
  * Fontis Blog Extension
  *
@@ -244,6 +243,9 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
                         </login>
                         <approval translate="label">
                             <label>Auto Approve Comments</label>
@@ -254,6 +256,9 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
                         </approval>
                         <loginauto translate="label">
                             <label>Logged in Auto Approve Comments</label>
@@ -264,6 +269,9 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
                         </loginauto>
                         <recipient_email translate="label">
                             <label>Send Emails To</label>
@@ -272,6 +280,9 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
                         </recipient_email>
                         <sender_email_identity translate="label">
                             <label>Email Sender</label>
@@ -281,6 +292,9 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
                         </sender_email_identity>
                         <email_template translate="label">
                             <label>Email Template</label>
@@ -290,6 +304,9 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
                         </email_template>
                         <recaptcha translate="label">
                             <label>Enable ReCAPTCHA</label>
@@ -300,6 +317,9 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
                         </recaptcha>
                         <grav_enabled translate="label">
                             <label>Enable Gravatar avatars</label>
@@ -310,6 +330,9 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
                         </grav_enabled>
                         <grav_size translate="label">
                             <label>Size of Gravatar avatars</label>
@@ -320,6 +343,9 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
                         </grav_size>
                         <grav_default>
                             <label>Use default Gravatar image</label>
@@ -330,6 +356,9 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
                         </grav_default>
                     </fields>
                 </comments>
@@ -359,6 +388,9 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
                         </type>
                         <limit translate="label">
                             <label>Limit</label>
@@ -369,6 +401,9 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
                         </limit>
                         <order translate="label">
                             <label>Sort Order</label>
@@ -378,6 +413,9 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
                         </order>
                         <showcount translate="label">
                             <label>Show Post Count</label>
@@ -387,6 +425,9 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
                         </showcount>
                     </fields>
                 </archives>
@@ -417,6 +458,9 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
                         </title>
                         <image translate="label">
                             <label>RSS Feed Image</label>
@@ -426,6 +470,9 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
                         </image>
                         <posts translate="label">
                             <label>RSS Posts to Show</label>
@@ -436,6 +483,9 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
                         </posts>
                         <usesummary translate="label">
                             <label>Use Post Summary</label>
@@ -446,6 +496,9 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
                         </usesummary>
                     </fields>
                 </rss>
