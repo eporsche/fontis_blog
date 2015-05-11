@@ -19,7 +19,7 @@
  * @copyright  Copyright (c) 2013 Fontis Pty. Ltd. (http://www.fontis.com.au)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class Fontis_Blog_Block_Rss extends Mage_Rss_Block_Abstract
+class Fontis_Blog_Block_Rss extends Mage_Core_Block_Template
 {
     const CACHE_TAG = 'fontis_blog_rss';
 
@@ -87,5 +87,33 @@ class Fontis_Blog_Block_Rss extends Mage_Rss_Block_Abstract
         }
 
         return $rssObj->createRssXml();
+    }
+
+    /**
+     * @return int
+     * @throws Exception
+     */
+    protected function _getStoreId()
+    {
+        //store id is store view id
+        $sid = (int)$this->getRequest()->getParam('store_id', 0);
+        if (empty($sid)) {
+            $sid = Mage::app()->getStore()->getId();
+        }
+        return $sid;
+    }
+
+    /**
+     * @return int
+     * @throws Exception
+     */
+    protected function _getCustomerGroupId()
+    {
+        //customer group id
+        $gid = (int)$this->getRequest()->getParam('cid', 0);
+        if (empty($gid)) {
+            $gid = Mage::getSingleton('customer/session')->getCustomerGroupId();
+        }
+        return $gid;
     }
 }
