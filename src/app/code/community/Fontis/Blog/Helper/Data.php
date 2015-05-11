@@ -221,6 +221,6 @@ class Fontis_Blog_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function disablePost()
     {
-        $this->clearFpcTags(self::GLOBAL_CACHE_TAG);
+        $this->clearFpcTags(Fontis_Blog_Helper_Data::GLOBAL_CACHE_TAG);
     }
 }

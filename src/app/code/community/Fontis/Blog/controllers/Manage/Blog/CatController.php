@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Fontis Blog Extension
  *
@@ -18,7 +19,6 @@
  * @copyright  Copyright (c) 2013 Fontis Pty. Ltd. (http://www.fontis.com.au)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-
 class Fontis_Blog_Manage_Blog_CatController extends Mage_Adminhtml_Controller_Action
 {
     protected function _initAction()
@@ -28,7 +28,7 @@ class Fontis_Blog_Manage_Blog_CatController extends Mage_Adminhtml_Controller_Ac
             ->_addBreadcrumb(Mage::helper('adminhtml')->__('Category Manager'), Mage::helper('adminhtml')->__('Category Manager'));
 
         return $this;
-    }   
+    }
 
     public function indexAction()
     {
@@ -41,13 +41,13 @@ class Fontis_Blog_Manage_Blog_CatController extends Mage_Adminhtml_Controller_Ac
             try {
                 Mage::getModel('blog/cat')->load($id)->delete();
 
-                Mage::helper("blog")->clearFpcTags(self::GLOBAL_CACHE_TAG);
+                Mage::helper("blog")->clearFpcTags(Fontis_Blog_Helper_Data::GLOBAL_CACHE_TAG);
 
                 Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('blog')->__('Category was successfully deleted.'));
                 $this->_redirect('*/*/');
             } catch (Exception $e) {
                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
-                $this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
+                $this->_redirect('*/*/edit', ['id' => $this->getRequest()->getParam('id')]);
             }
         }
         $this->_redirect('*/*/');
@@ -63,7 +63,7 @@ class Fontis_Blog_Manage_Blog_CatController extends Mage_Adminhtml_Controller_Ac
                 foreach ($blogIds as $blogId) {
                     Mage::getModel('blog/cat')->load($blogId)->delete();
                 }
-                Mage::helper("blog")->clearFpcTags(self::GLOBAL_CACHE_TAG);
+                Mage::helper("blog")->clearFpcTags(Fontis_Blog_Helper_Data::GLOBAL_CACHE_TAG);
 
                 Mage::getSingleton('adminhtml/session')->addSuccess(
                     Mage::helper('adminhtml')->__('Total of %d categories were successfully deleted', count($blogIds))
@@ -77,7 +77,7 @@ class Fontis_Blog_Manage_Blog_CatController extends Mage_Adminhtml_Controller_Ac
 
     public function editAction()
     {
-        $id = $this->getRequest()->getParam("id");
+        $id    = $this->getRequest()->getParam("id");
         $model = Mage::getModel("blog/cat")->load($id);
 
         if ($model->getId() || $id == 0) {
@@ -88,10 +88,10 @@ class Fontis_Blog_Manage_Blog_CatController extends Mage_Adminhtml_Controller_Ac
         }
     }
 
-    public function newAction() 
+    public function newAction()
     {
-        $id     = $this->getRequest()->getParam("id");
-        $model  = Mage::getModel("blog/cat")->load($id);
+        $id    = $this->getRequest()->getParam("id");
+        $model = Mage::getModel("blog/cat")->load($id);
 
         $this->_renderCatEditPage($model);
     }
@@ -117,16 +117,16 @@ class Fontis_Blog_Manage_Blog_CatController extends Mage_Adminhtml_Controller_Ac
 
         $this->renderLayout();
     }
-    
+
     public function saveAction()
     {
         $request = $this->getRequest();
         if ($data = $request->getPost()) {
             if (!$data["sort_order"]) {
                 // If no sort order was specified, automatically make it one more than the current last
-                $conn = Mage::getSingleton("core/resource")->getConnection("core_read");
-                $maxSortOrder = $conn->select()->from(Mage::getResourceModel("blog/cat")->getMainTable(), array(new Zend_Db_Expr("max(sort_order)")));
-                $data["sort_order"] = (int) $conn->fetchOne($maxSortOrder) + 1;
+                $conn               = Mage::getSingleton("core/resource")->getConnection("core_read");
+                $maxSortOrder       = $conn->select()->from(Mage::getResourceModel("blog/cat")->getMainTable(), [new Zend_Db_Expr("max(sort_order)")]);
+                $data["sort_order"] = (int)$conn->fetchOne($maxSortOrder) + 1;
             }
 
             $model = Mage::getModel("blog/cat");
@@ -149,12 +149,12 @@ class Fontis_Blog_Manage_Blog_CatController extends Mage_Adminhtml_Controller_Ac
                 } else {
                     // If the name or identifier of a category has changed, we need to redo all blog pages to ensure the change is reflected.
                     if ($model->getData("title") != $model->getOrigData("title") || $model->getData("identifier") != $model->getOrigData("identifier")) {
-                        Mage::helper("blog")->clearFpcTags(self::GLOBAL_CACHE_TAG);
+                        Mage::helper("blog")->clearFpcTags(Fontis_Blog_Helper_Data::GLOBAL_CACHE_TAG);
                     }
                 }
 
                 if ($this->getRequest()->getParam('back')) {
-                    $this->_redirect('*/*/edit', array('id' => $model->getId()));
+                    $this->_redirect('*/*/edit', ['id' => $model->getId()]);
                     return;
                 }
                 $this->_redirect('*/*/');
@@ -162,7 +162,7 @@ class Fontis_Blog_Manage_Blog_CatController extends Mage_Adminhtml_Controller_Ac
             } catch (Exception $e) {
                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
                 Mage::getSingleton('adminhtml/session')->setFormData($data);
-                $this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
+                $this->_redirect('*/*/edit', ['id' => $this->getRequest()->getParam('id')]);
                 return;
             }
         }
