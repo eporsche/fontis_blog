@@ -25,7 +25,7 @@ class Fontis_Blog_Block_Rss extends Mage_Core_Block_Template
 
     protected function _prepareLayout()
     {
-        Mage::helper('blog')->addRequestTag([self::CACHE_TAG, Fontis_Blog_Helper_Data::GLOBAL_CACHE_TAG]);
+        Mage::helper('blog')->addTagToFpc([self::CACHE_TAG, Fontis_Blog_Helper_Data::GLOBAL_CACHE_TAG]);
         return parent::_prepareLayout();
     }
 
