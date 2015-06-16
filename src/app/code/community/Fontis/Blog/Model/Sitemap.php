@@ -111,7 +111,7 @@ class Fontis_Blog_Model_Sitemap extends Mage_Sitemap_Model_Sitemap
          */
         $changefreq = (string)Mage::getStoreConfig('sitemap/blog/changefreq_post');
         $priority   = (string)Mage::getStoreConfig('sitemap/blog/priority_post');
-        $collection = Mage::getModel('blog/post')->getCollection($storeId);
+        $collection = Mage::getModel('blog/post')->getCollection($storeId)->addStoreFilter($storeId);
         Mage::getSingleton('blog/status')->addEnabledFilterToCollection($collection);
         $route = Mage::helper('blog')->getBlogRoute();
         foreach ($collection as $item) {
@@ -130,7 +130,7 @@ class Fontis_Blog_Model_Sitemap extends Mage_Sitemap_Model_Sitemap
          */
         $changefreq = (string)Mage::getStoreConfig('sitemap/blog/changefreq_cat');
         $priority   = (string)Mage::getStoreConfig('sitemap/blog/priority_cat');
-        $collection = Mage::getModel('blog/cat')->getCollection($storeId);
+        $collection = Mage::getModel('blog/cat')->getCollection($storeId)->addStoreFilter($storeId);
         $route      = Mage::helper('blog')->getBlogRoute();
         foreach ($collection as $item) {
             $xml = sprintf('<url><loc>%s</loc><lastmod>%s</lastmod><changefreq>%s</changefreq><priority>%.1f</priority></url>',
