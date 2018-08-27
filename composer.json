@@ -1,7 +1,7 @@
 {
     "name":"zookal/fontis-blog",
     "type":"magento-module",
-    "license":"Open Software License (OSL 3.0)",
+    "license":"OSL-3.0",
     "description":"This extension provides a native blog for Magento.",
     "homepage":"http://www.fontis.com.au",
     "authors":[
