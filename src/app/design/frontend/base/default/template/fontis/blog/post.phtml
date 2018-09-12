@@ -40,7 +40,7 @@
             <?php endforeach; ?>
         <?php else: ?>
             <?php echo $_blogHelper->__("Posted"); ?>
-        <?php endif; ?> By <?php echo $post->getUser(); ?>
+        <?php endif; ?>  <?php echo $_blogHelper->__("By"); ?> <?php echo $post->getUser(); ?>
     </div>
 </div>
 
