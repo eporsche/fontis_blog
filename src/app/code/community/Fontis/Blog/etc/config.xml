@@ -269,7 +269,7 @@
                 <blogcrumbs>1</blogcrumbs>
                 <readmore>500</readmore>
                 <usesummary>1</usesummary>
-                <dateformat>long</dateformat>
+                <dateformat>short</dateformat>
                 <layout>page/2columns-right.phtml</layout>
                 <wysiwyg_post>enabled</wysiwyg_post>
                 <wysiwyg_summary>hidden</wysiwyg_summary>

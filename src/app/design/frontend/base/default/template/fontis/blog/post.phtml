@@ -24,8 +24,13 @@
 <div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml(); ?></div>
 <div class="postWrapper">
     <div class="postTitle">
-        <h2><a href="<?php echo $post->getAddress(); ?>"><?php echo $post->getTitle(); ?></a></h2>
-		<h3><?php echo $post->getCreatedTime(); ?></h3>
+        <h2>
+         <a href="<?php echo $post->getAddress(); ?>">
+            <span class="headlineIntro"><?php echo $post->getTitle(); ?></span>
+            <span class="headline"><?php echo $post->getCreatedTime(); ?></span>
+            </a>
+        </h2>
+		
     </div>
 
     <div class="postContent"><?php echo $post->getPostContent(); ?></div>
