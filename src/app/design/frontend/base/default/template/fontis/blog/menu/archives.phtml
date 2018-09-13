@@ -21,7 +21,7 @@
 ?>
 <?php if ($archives = $this->getArchives()): ?>
     <?php $showPostCount = $this->showPostCount(); ?>
-    <h5><?php echo Mage::helper("blog")->__($this->getArchiveLabel() . " Archives"); ?></h5>
+    <h5><?php echo Mage::helper("blog")->__("Archives"); ?></h5>
     <ul>
         <?php foreach ($archives as $archive): ?>
             <li>
