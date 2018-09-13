@@ -52,7 +52,7 @@ $_helper = Mage::helper("blog");
                     <?php endforeach; ?>
                 <?php else: ?>
                     <?php echo $_helper->__("Posted"); ?>
-                <?php endif; ?> By <?php echo $post->getUser(); ?>
+                <?php endif; ?> <?php echo $_helper->__("By"); ?> <?php echo $post->getUser(); ?>
             </div>
         </div>
     <?php endforeach; ?>
