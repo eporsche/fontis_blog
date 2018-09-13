@@ -264,8 +264,8 @@
         <fontis_blog>
             <blog>
                 <enabled>1</enabled>
-                <title>Blog</title>
-                <route>blog</route>
+                <title>Newsblog</title>
+                <route>newsblog</route>
                 <blogcrumbs>1</blogcrumbs>
                 <readmore>500</readmore>
                 <usesummary>1</usesummary>
@@ -282,7 +282,7 @@
                 <footer>0</footer>
             </menu>
             <comments>
-                <enabled>1</enabled>
+                <enabled>0</enabled>
                 <login>0</login>
                 <approval>0</approval>
                 <loginauto>0</loginauto>
@@ -298,7 +298,7 @@
                 <showcount>1</showcount>
             </archives>
             <rss>
-                <enabled>1</enabled>
+                <enabled>0</enabled>
                 <image>images/logo.gif</image>
                 <usesummary>0</usesummary>
             </rss>
