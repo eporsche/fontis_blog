@@ -53,7 +53,7 @@ abstract class Fontis_Blog_Block_Abstract extends Mage_Core_Block_Template
 
         // Check if we need to use summary content and make adjustments as necessary
         if (Mage::getStoreConfig("fontis_blog/blog/usesummary") && ($summaryContent = $post->getSummaryContent())) {
-            $summaryContent .= ' ...&nbsp;&nbsp;<a href="' . $post->getAddress() . '">' . $this->__("Read More") . '</a>';
+            $summaryContent .= ' ...&nbsp;&nbsp;<a class="readMore" href="' . $post->getAddress() . '">' . $this->__("Read More") . '</a>';
             $post->setPostContent($summaryContent);
         } else if ($readMore = (int)Mage::getStoreConfig('fontis_blog/blog/readmore')) {
             $content = $post->getPostContent();
