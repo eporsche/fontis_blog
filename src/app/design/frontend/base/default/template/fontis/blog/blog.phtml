@@ -23,7 +23,7 @@
 $posts = $this->getPosts();
 $_helper = Mage::helper("blog");
 ?>
-
+<h1><?php echo $_helper->getBlogTitle(); ?></h1>
 <?php foreach ($posts as $post): ?>
     <div class="postWrapper">
         <div class="postTitle">
