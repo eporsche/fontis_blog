@@ -24,12 +24,12 @@
 <div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml(); ?></div>
 <div class="postWrapper">
     <div class="postTitle">
-        <h1>
-            <a href="<?php echo $post->getAddress(); ?>">
+        <a href="<?php echo $post->getAddress(); ?>">
+	    <h1>
                 <span class="headlineIntro"><?php echo $post->getTitle(); ?></span>
                 <span class="headline"><?php echo $post->getCreatedTime(); ?></span>
-            </a>
-        </h1>
+            </h1>
+        </a>
     </div>
 
     <div class="postContent"><?php echo $post->getPostContent(); ?></div>
