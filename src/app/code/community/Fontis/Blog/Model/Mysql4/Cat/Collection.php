@@ -19,7 +19,7 @@
  * @copyright  Copyright (c) 2013 Fontis Pty. Ltd. (http://www.fontis.com.au)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class Fontis_Blog_Model_Mysql4_Cat_Collection extends Mage_Core_Model_Mysql4_Collection_Abstract
+class Fontis_Blog_Model_Mysql4_Cat_Collection extends Mage_Core_Model_Resource_Db_Collection_Abstract
 {
     public function _construct()
     {
