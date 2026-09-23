@@ -47,23 +47,29 @@ class Fontis_Blog_Block_Menu extends Fontis_Blog_Block_Abstract
                 ->setOrder("created_time", Mage::getStoreConfig("fontis_blog/archives/order"));
             Mage::getSingleton('blog/status')->addEnabledFilterToCollection($collection);
 
+            // Jeder GROUP-BY-Ausdruck einzeln als Zend_Db_Expr: zf1-future (REGEX_COLUMN_EXPR_GROUP) erkennt nur
+            // einen einzelnen Funktionsaufruf als Ausdruck und quotet "year(...), month(...)" als Spaltennamen.
             $archiveType = Mage::getStoreConfig("fontis_blog/archives/type");
             if ($archiveType == Fontis_Blog_Model_System_Archivetype::YEARLY) {
                 $columns = [new Zend_Db_Expr("year(created_time) as year")];
-                $group   = "year(created_time)";
+                $group   = [new Zend_Db_Expr("year(created_time)")];
             } elseif ($archiveType == Fontis_Blog_Model_System_Archivetype::MONTHLY) {
                 $columns = [
                     new Zend_Db_Expr("year(created_time) as year"),
                     new Zend_Db_Expr("month(created_time) as month")
                 ];
-                $group   = "year(created_time), month(created_time)";
+                $group   = [new Zend_Db_Expr("year(created_time)"), new Zend_Db_Expr("month(created_time)")];
             } elseif ($archiveType == Fontis_Blog_Model_System_Archivetype::DAILY) {
                 $columns = [
                     new Zend_Db_Expr("year(created_time) as year"),
                     new Zend_Db_Expr("month(created_time) as month"),
                     new Zend_Db_Expr("day(created_time) as day"),
                 ];
-                $group   = "year(created_time), month(created_time), day(created_time)";
+                $group   = [
+                    new Zend_Db_Expr("year(created_time)"),
+                    new Zend_Db_Expr("month(created_time)"),
+                    new Zend_Db_Expr("day(created_time)"),
+                ];
             }
             if ($this->showPostCount()) {
                 $columns[] = new Zend_Db_Expr("count(main_table.post_id) as postcount");
